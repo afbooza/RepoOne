@@ -1,0 +1,20 @@
+#sun{
+	position: absolute;
+	-webkit-transform: translate(3em,5em);
+    -moz-transform: translate(3em,5em);
+    -o-transform: translate(3em,5em);
+    -ms-transform: translate(3em,5em);
+    transform: translate(3em,5em);
+	transition:5s;
+}
+ul.weather
+{
+list-style-type: none
+}
+
+@keyframes slidein {
+  0% { top: 0; left: 0; }
+  30% { top: 50px; }
+  68%, 72% { left: 50px; }
+  100% { top: 100px; left: 100%; }
+}
