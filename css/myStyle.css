@@ -7,7 +7,7 @@
     transform: translate(3em,5em);
 	transition:5s;
 }
-ul.weather
+ul
 {
 list-style-type: none
 }
@@ -17,4 +17,10 @@ list-style-type: none
   30% { top: 50px; }
   68%, 72% { left: 50px; }
   100% { top: 100px; left: 100%; }
+}
+.info{
+	color:white;
+}
+.info:hover{
+	color:blue;
 }
