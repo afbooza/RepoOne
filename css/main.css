@@ -1,0 +1,12 @@
+
+/* CSS Document */
+body #body{margin:3em;}
+#resume #name{text-align:center;}
+#resume #address{float:left;}
+#resume #contact{float:right;}
+#header{border-bottom: solid 1px black;}
+#resume ul{margin:0px; padding:0px;}
+#resume li{margin:0px; padding:0px;}
+#resume p{margin-bottom:0px;}
+#resume .social{text-align: center;}
+#resume .social img{margin:1em;}
