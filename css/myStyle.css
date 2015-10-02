@@ -23,4 +23,18 @@ list-style-type: none
 }
 .info:hover{
 	color:blue;
+	text-decoration: none;
 }
+.info:visited{
+	color:white;
+}
+#portfolio{
+	margin:0;
+	padding:0;
+}
+#portfolio section{
+	margin:1em;
+	padding: 1em;
+}
+.social{text-align: center;}
+.social img{margin:1em;}

@@ -42,12 +42,15 @@ app.config(['$routeProvider',
 		$routeProvider.
 			when('/', {
 				templateUrl: 'partials/homeBody.html',
-				controller:'homeController',
-        css:[ 'css/myStyle.css','css/freelancer.css']
+				controller:'homeController'
 			}).
       when('/Resume',{
         templateUrl: 'partials/resume.html',
         css:['css/fontello.css', 'css/foundation.min.css','css/freelancer.css','css/myStyle.css']
+      }).
+      when('/contact',{
+        templateUrl:'partials/contact.html',
+        css:['css/foundation.min.css','css/freelancer.css','css/myStyle.css']
       }).
 			otherwise({
 				redirectTo: '/'
