@@ -1,121 +1,145 @@
+$(document).keyup(function (e) {
+    allowed = true;
+});
 
-// Create the canvas
+function heroVert(direction) {
+    hero.y += direction;
 
-canvas.width = 1000;
-canvas.height = 500;
-document.body.appendChild(canvas);
-// Background image
+    allowed = false;
+}
 
+function heroHorz(direction) {
+    hero.x += direction;
+    allowed = false;
+}
+var up = heroVert(-30);
+var right = heroHorz(-30);
+var left = heroHorz(30);
+var down = heroVert(30);
+var stop = heroHorz(0);
 
-$(document).keydown(function(event) {
+$(document).keydown(function (event) {
     var key = event.keyCode;
-    if(allowed){
-            switch(key) {
-                case 38:
-                  hero.y -= speed;
-                  event.preventDefault();
-                  allowed = false;
-                  break;
-              case  39:
-                  hero.x += speed;
-                  event.preventDefault();
-                  allowed = false;
-                  break;
-              case  37:
-                  hero.x -= speed;
-                  currentHeroX = hero.x;
-                  event.preventDefault();
-                  allowed = false;
-                  break;
-                case  40:
-                    hero.y += speed;
+    if (allowed) {
+        switch (key) {
+            case 38: //up
+                queue.push(up);
+                event.preventDefault();
+                break;
+            case  39: //right
+                if(hero.x <= canvas.width - 50) {
+                    queue.push(right);
                     event.preventDefault();
-                    allowed = false;
-                  break;
-               default:
-                  allowed = false;
-                  event.preventDefault();
-                  }
                 }
-});
-$(document).keyup(function(e) {
-  allowed = true;
+                else{
+                    queue.push(stop);
+                    event.preventDefault();
+                }
+                break;
+            case  37: //left
+                queue.push(left);
+                event.preventDefault();
+                break;
+            case  40: //down
+                queue.push(down);
+                event.preventDefault();
+                break;
+            default:
+                allowed = false;
+                event.preventDefault();
+        }
+    }
 });
 
 
+function updateEntity(entity, speedY, speedX) {
+    if(Math.random < 0.5) {
+        entity.x += speedX;
+        monsterImage.src = "../img/DetailPlayer.png";
+        ctx.drawImage(monsterImage, entity.x, entity.y);
+        if (entity.x < 0 || entity.x > canvas.width) {
+            //console.log("Out of bounds");
+            entity.speedX = -entity.speedX;
+            return entity;
+        }
+        //if (entity.y < 0 || entity.y > canvas.height) {
+        //    entity.speedY = -entity.speedY;
+        //    //console.log("Out of bounds");
+        //}
+        return entity;
+    }
+    else{
+        entity.y += speedY;
+        monsterImage.src = "../img/DetailPlayer.png";
+        ctx.drawImage(monsterImage, entity.x, entity.y);
+        //if (entity.x < 0 || entity.x > canvas.width) {
+        //    //console.log("Out of bounds");
+        //    entity.speedX = -entity.speedX;
+        //}
+        if (entity.y < 0 || entity.y > canvas.height) {
+            entity.speedY = -entity.speedY;
+            //console.log("Out of bounds");
+            return entity;
+        }
+        return entity;
+    }
+
+}
 
 // Reset the game when the player catches a monster
 var reset = function () {
-  if(hero.x <= 60){
-    hero.x = canvas.width - 40;
-    monstersCaught +=6;
-  }
-	else{
-    hero.x = currentHeroX;
-  }
-	hero.y = canvas.height / 2;
-	//Throw the monster somewhere on the screen randomly
-
-
+    if (hero.x <= 60) {
+        hero.x = canvas.width - 40;
+        monstersCaught += 6;
+    }
+    else {
+        hero.x = currentHeroX;
+    }
+    hero.y = canvas.height / 2;
 };
 
 // Update game objects
-var update = function (modifier) {
-	if (38 in keysDown) { // Player holding up
-    hero.y -= 1;
-	}
-	if (40 in keysDown) { // Player holding down
-		hero.y += 1;
-	}
-	if (37 in keysDown) { // Player holding left
-		hero.x -=1;
-	}
-	if (39 in keysDown) { // Player holding right
-		hero.x += 1;
-	}
-	// Are they touching?
-	if (
-		hero.x <= 60
-	) {
-		reset();
-	}
+function update(counter) {
+    queue[counter]();
+    if (hero.x <= 60) {
+        reset();
+    }
 };
 
-
+function drawEnemies(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var monsters = []
+    for (var key in monsterList) {
+        updateEntity(monsterList[key], speedY(), speedX());
+        monsters.push();
+    }
+    return monsters;
+}
 
 // Draw everything
-var render = function () {
-
-  background.draw();
-  hero.draw();
-  for(var i=1; i < monsters.length; i++)
-  {
-    monsters[i] = new monster();
-    monsters[i].draw();
-  }
-	ctx.fillStyle = "rgb(000, 250, 250)";
-	ctx.font = "24px Helvetica";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
-	ctx.fillText("Score: " + monstersCaught, 32, 32);
+function render(counter) {
+    background.draw();
+    hero.draw();
+    update(counter);
+    ctx.fillStyle = "rgb(000, 250, 250)";
+    ctx.font = "24px Helvetica";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText("Score: " + monstersCaught, 32, 32);
 };
+
 // The main game loop
-var main = function () {
-	var now = Date.now();
-	var delta = now - then;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-	render();
-	then = now;
-	// Request to do this again ASAP
-	requestAnimationFrame(main);
+function main () {
+    render(counter);
+    //update();
+    counter++;
 };
-
 // Cross-browser support for requestAnimationFrame
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 // Let's play this game!
-var then = Date.now();
-setInterval(function() {
-  update();
-  main();
-}, 1000/FPS);
+var monsters = [];
+
+monsters = setInterval(function(){queue.push(drawEnemies)}, 2000);
+requestAnimationFrame(main(counter));
+console.log(counter);
