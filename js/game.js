@@ -43,7 +43,7 @@ $(document).keydown(function (event) {
             case  40: //down
                 queue.push(down);
                 event.preventDefault();
-                break;
+                break;					
             default:
                 allowed = false;
                 event.preventDefault();
@@ -100,14 +100,14 @@ var reset = function () {
 
 // Update game objects
 function update(counter) {
-    queue[counter]();
+    queue[counter];
     if (hero.x <= 60) {
         reset();
     }
 };
 
 function drawEnemies(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
     var monsters = []
     for (var key in monsterList) {
         updateEntity(monsterList[key], speedY(), speedX());
@@ -117,7 +117,7 @@ function drawEnemies(){
 }
 
 // Draw everything
-function render(counter) {
+function render() {
     background.draw();
     hero.draw();
     update(counter);
@@ -127,12 +127,17 @@ function render(counter) {
     ctx.textBaseline = "top";
     ctx.fillText("Score: " + monstersCaught, 32, 32);
 };
-
 // The main game loop
-function main () {
-    render(counter);
+function main() {
+    queue.push(render());
     //update();
+    requestAnimationFrame(main);
+
+    queue[counter];
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
     counter++;
+
+
 };
 // Cross-browser support for requestAnimationFrame
 var w = window;
@@ -141,5 +146,4 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 var monsters = [];
 
 monsters = setInterval(function(){queue.push(drawEnemies)}, 2000);
-requestAnimationFrame(main(counter));
-console.log(counter);
+main();
