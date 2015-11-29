@@ -1,149 +1,225 @@
-$(document).keyup(function (e) {
-    allowed = true;
-});
+window.addEventListener("load", eventWindowLoaded, false);
 
-function heroVert(direction) {
-    hero.y += direction;
-
-    allowed = false;
-}
-
-function heroHorz(direction) {
-    hero.x += direction;
-    allowed = false;
-}
-var up = heroVert(-30);
-var right = heroHorz(-30);
-var left = heroHorz(30);
-var down = heroVert(30);
-var stop = heroHorz(0);
-
-$(document).keydown(function (event) {
-    var key = event.keyCode;
-    if (allowed) {
-        switch (key) {
-            case 38: //up
-                queue.push(up);
-                event.preventDefault();
-                break;
-            case  39: //right
-                if(hero.x <= canvas.width - 50) {
-                    queue.push(right);
-                    event.preventDefault();
-                }
-                else{
-                    queue.push(stop);
-                    event.preventDefault();
-                }
-                break;
-            case  37: //left
-                queue.push(left);
-                event.preventDefault();
-                break;
-            case  40: //down
-                queue.push(down);
-                event.preventDefault();
-                break;					
-            default:
-                allowed = false;
-                event.preventDefault();
-        }
+var Debugger = function () {
+};
+Debugger.log = function (message) {
+    try {
+        console.log(message);
+    } catch (exception) {
+        return;
     }
-});
+}
+
+function eventWindowLoaded() {
+    canvasApp();
+}
+
+function canvasSupport() {
+    return Modernizr.canvas;
+}
 
 
-function updateEntity(entity, speedY, speedX) {
-    if(Math.random < 0.5) {
-        entity.x += speedX;
+
+var gameOver;
+function yRandom() { return Math.floor((Math.random() * 440) + 10)}
+function xRandom() { return Math.floor((Math.random() * 440) + 10)}
+
+var monster =
+{
+    x:  xRandom(),
+    y:  yRandom(),
+    draw: function() {
+        var monsterImage = new Image();
+        monsterImage.onload = function(){
+            ctx.drawImage(monsterImage, monster.x, monster.y) //TODO: random monster placement
+        }
         monsterImage.src = "../img/DetailPlayer.png";
-        ctx.drawImage(monsterImage, entity.x, entity.y);
-        if (entity.x < 0 || entity.x > canvas.width) {
-            //console.log("Out of bounds");
-            entity.speedX = -entity.speedX;
-            return entity;
-        }
-        //if (entity.y < 0 || entity.y > canvas.height) {
-        //    entity.speedY = -entity.speedY;
-        //    //console.log("Out of bounds");
-        //}
-        return entity;
+    },
+    move: function(){
+        ctx.drawImage(monsterImage, moveX, moveY);
     }
-    else{
-        entity.y += speedY;
-        monsterImage.src = "../img/DetailPlayer.png";
-        ctx.drawImage(monsterImage, entity.x, entity.y);
-        //if (entity.x < 0 || entity.x > canvas.width) {
-        //    //console.log("Out of bounds");
-        //    entity.speedX = -entity.speedX;
-        //}
-        if (entity.y < 0 || entity.y > canvas.height) {
-            entity.speedY = -entity.speedY;
-            //console.log("Out of bounds");
-            return entity;
+}
+var monster2 = {
+    x:  xRandom(),
+    y:  yRandom(),
+    draw: function() {
+        var monsterImage = new Image();
+        monsterImage.onload = function(){
+            ctx.drawImage(monsterImage, monster.x, monster.y) //TODO: random monster placement
         }
-        return entity;
+        monsterImage.src = "../img/DetailPlayer.png";
+    },
+    move: function(){
+        ctx.drawImage(monsterImage, moveX, moveY);
+    }
+}
+
+function monsterMove(){
+    setTimeout(monsterMove, 2000);
+    //xRandom =  Math.floor((Math.random() * 900) + 10);
+    //Debugger.log(xRandom);
+    var chosenValue = Math.random();
+    var step = 30;
+
+    if(chosenValue < 0.25)
+    {
+        monster.x += step;
+    }
+    else if(0.25 < chosenValue < 0.5)
+    {
+        monster.x -= step;
+    }
+    else if(0.5 < chosenValue < 0.75)
+    {
+        monster.y += step;
+    }
+    else if(0.75 < chosenValue < 1)
+    {
+        monster.y -= step;
+    }
+    Debugger.log(chosenValue);
+    Debugger.log(monster.x);
+    Debugger.log(monster.y);
+}
+
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+function canvasApp() {
+
+    if (!canvasSupport()) {
+        return;
+    }
+    // Game objects
+    var monstersCaught = 0;
+    var speed = 30
+    var hero = {
+        width: 20,
+        height: 20, // movement in pixels per second
+        x: canvas.width - 40,
+        y: canvas.height / 2,
+        draw: function () {
+            var heroImage = new Image();
+            heroImage.onload = function () {
+                ctx.drawImage(heroImage, hero.x, hero.y);
+
+            }
+            heroImage.src = "../img/PlayerOneDetail.png";
+        }
     }
 
-}
+    var background =
+    {
+        draw: function () {
+            var bgImage = new Image();
+            bgImage.onload = function () {
+                ctx.drawImage(bgImage, 0, 0);
+                ctx.fillStyle = "rgb(000, 250, 250)";
+                ctx.font = "24px Helvetica";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "top";
+                ctx.fillText("Score: " + monstersCaught, 32, 32);
+            }
+            bgImage.src = "../img/field.png";
+        }
+    }
+
+
+
+
+
+    var allowed = false;
+    $(document).keyup(function (e) {
+        allowed = true;
+    });
+
+    $(document).keydown(function (event) {
+        var key = event.keyCode;
+        if (allowed) {
+            switch (key) {
+                case 38: //up
+                    hero.y -= speed;
+                    event.preventDefault();
+                    allowed = false;
+                    break;
+                case  39: //right
+                    if (hero.x <= canvas.width - 50) {
+                        hero.x += speed;
+                        event.preventDefault();
+                    }
+                    else {
+                        hero.x += 0;
+                        event.preventDefault();
+                    }
+                    allowed = false;
+                    break;
+                case  37: //left
+                    hero.x -= speed;
+                    event.preventDefault();
+                    allowed = false;
+                    break;
+                case  40: //down
+                    hero.y += speed;
+                    event.preventDefault();
+                    allowed = false;
+                    break;
+                default:
+                    allowed = false;
+                    event.preventDefault();
+            }
+        }
+    });
 
 // Reset the game when the player catches a monster
-var reset = function () {
-    if (hero.x <= 60) {
-        hero.x = canvas.width - 40;
-        monstersCaught += 6;
-    }
-    else {
-        hero.x = currentHeroX;
-    }
-    hero.y = canvas.height / 2;
-};
+    function reset() {
+        if (hero.x <= 60) {
+            hero.x = canvas.width - 40;
+            monstersCaught += 6;
+        }
+        else {
+            hero.x = currentHeroX;
+        }
+        hero.y = canvas.height / 2;
+    };
 
 // Update game objects
-function update(counter) {
-    queue[counter];
-    if (hero.x <= 60) {
-        reset();
-    }
-};
+    function update() {
+        if (hero.x <= 60) {
+            reset();
+        }
+    };
 
-function drawEnemies(){
-    
-    var monsters = []
-    for (var key in monsterList) {
-        updateEntity(monsterList[key], speedY(), speedX());
-        monsters.push();
-    }
-    return monsters;
-}
+    //function updateMonster(){
+    //    window.setTimeout(updateMonster, 2000);
+    //    var newMonster = Object.create(monster);
+    //    newMonster.draw();
+    //    Debugger.log("new monster x: " + newMonster.x + " new monster y: " + newMonster.y);
+    //}
+
 
 // Draw everything
-function render() {
-    background.draw();
-    hero.draw();
-    update(counter);
-    ctx.fillStyle = "rgb(000, 250, 250)";
-    ctx.font = "24px Helvetica";
-    ctx.textAlign = "left";
-    ctx.textBaseline = "top";
-    ctx.fillText("Score: " + monstersCaught, 32, 32);
-};
-// The main game loop
-function main() {
-    queue.push(render());
-    //update();
-    requestAnimationFrame(main);
+    Debugger.log("Drawing field");
+    function render() {
+        background.draw();
+        hero.draw();
+        monster.draw();
+        monster2.draw();
+        if (gameOver) {
+            ctx.fillStyle = "#FF0000";
+            ctx.font = "40px Sans-Serif";
+            ctx.fillText  ("You Got It!", 150, 180);
+        }
+        update();
+    };
 
-    queue[counter];
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-    counter++;
+    function gameLoop() {
+        window.setTimeout(gameLoop, 60);
+       render();
+    }
+
+    gameLoop();
+    monsterMove();
 
 
-};
-// Cross-browser support for requestAnimationFrame
-var w = window;
-requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
-// Let's play this game!
-var monsters = [];
-
-monsters = setInterval(function(){queue.push(drawEnemies)}, 2000);
-main();
+}
