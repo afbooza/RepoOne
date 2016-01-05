@@ -9,6 +9,8 @@ function Monster(){
 var mon1 = new Monster();
 var mon2 = new Monster();
 
+
+
 var Debugger = function () {
 };
 Debugger.log = function (message) {
@@ -165,9 +167,10 @@ function canvasApp() {
         if (hero.x <= 60) {
             reset();
         }
-        if(((mon1.x <= hero.x) && (hero.x <= mon1.x +10)) && ((mon1.y <= hero.y + 20) &&(hero.y <= mon1.y + 20))){
-            Debugger.log("hero x: " + hero.x + " hero y " + hero.y +", mon1.x " + mon1.x + " mon1.y " + mon1.y);
-            reset();
+        var distance = Math.sqrt(Math.pow((hero.x - mon1.x),2)+ Math.pow((hero.y - mon1.y),2));
+        if(distance <= 30)
+        {
+           reset();
         }
     };
 
