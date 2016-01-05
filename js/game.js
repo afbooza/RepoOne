@@ -1,5 +1,14 @@
 window.addEventListener("load", eventWindowLoaded, false);
 
+function Monster(){
+    this.x = xRandom();
+    this.y = yRandom();
+}
+
+
+var mon1 = new Monster();
+var mon2 = new Monster();
+
 var Debugger = function () {
 };
 Debugger.log = function (message) {
@@ -24,62 +33,65 @@ var gameOver;
 function yRandom() { return Math.floor((Math.random() * 440) + 10)}
 function xRandom() { return Math.floor((Math.random() * 440) + 10)}
 
-var monster =
-{
-    x:  xRandom(),
-    y:  yRandom(),
-    draw: function() {
-        var monsterImage = new Image();
-        monsterImage.onload = function(){
-            ctx.drawImage(monsterImage, monster.x, monster.y) //TODO: random monster placement
-        }
-        monsterImage.src = "../img/DetailPlayer.png";
-    },
-    move: function(){
-        ctx.drawImage(monsterImage, moveX, moveY);
+
+function draw(Monster){
+    var monsterImage = new Image();
+    monsterImage.onload = function(){
+        ctx.drawImage(monsterImage, Monster.x, Monster.y) //TODO: random monster placement
     }
-}
-var monster2 = {
-    x:  xRandom(),
-    y:  yRandom(),
-    draw: function() {
-        var monsterImage = new Image();
-        monsterImage.onload = function(){
-            ctx.drawImage(monsterImage, monster.x, monster.y) //TODO: random monster placement
-        }
-        monsterImage.src = "../img/DetailPlayer.png";
-    },
-    move: function(){
-        ctx.drawImage(monsterImage, moveX, moveY);
-    }
+    monsterImage.src = "../img/DetailPlayer.png";
 }
 
-function monsterMove(){
-    setTimeout(monsterMove, 2000);
+
+
+//var monster =
+//{
+//    x:  200,
+//    y:  200,
+//    draw: function() {
+//        var monsterImage = new Image();
+//        monsterImage.onload = function(){
+//            ctx.drawImage(monsterImage, monster.x, monster.y) //TODO: random monster placement
+//        }
+//        monsterImage.src = "../img/DetailPlayer.png";
+//    },
+//    init: function(){
+//        monster.x = xRandom();
+//        monster.y = yRandom();
+//    }
+//}
+
+
+
+
+
+function monsterMove(mon){
+    setTimeout(function() {
+        var chosenValue = Math.random();
+        var step = 30;
+
+        if(chosenValue < 0.25)
+        {
+            mon.x += step;
+        }
+        else if(0.25 < chosenValue < 0.5)
+        {
+            mon.x -= step;
+        }
+        else if(0.5 < chosenValue < 0.75)
+        {
+            mon.y += step;
+        }
+        else if(0.75 < chosenValue < 1)
+        {
+            mon.y -= step;
+        }
+        monsterMove(mon);
+        }, 2000);
+
     //xRandom =  Math.floor((Math.random() * 900) + 10);
     //Debugger.log(xRandom);
-    var chosenValue = Math.random();
-    var step = 30;
 
-    if(chosenValue < 0.25)
-    {
-        monster.x += step;
-    }
-    else if(0.25 < chosenValue < 0.5)
-    {
-        monster.x -= step;
-    }
-    else if(0.5 < chosenValue < 0.75)
-    {
-        monster.y += step;
-    }
-    else if(0.75 < chosenValue < 1)
-    {
-        monster.y -= step;
-    }
-    Debugger.log(chosenValue);
-    Debugger.log(monster.x);
-    Debugger.log(monster.y);
 }
 
 
@@ -124,10 +136,6 @@ function canvasApp() {
             bgImage.src = "../img/field.png";
         }
     }
-
-
-
-
 
     var allowed = false;
     $(document).keyup(function (e) {
@@ -203,8 +211,8 @@ function canvasApp() {
     function render() {
         background.draw();
         hero.draw();
-        monster.draw();
-        monster2.draw();
+        draw(mon1);
+        draw(mon2);
         if (gameOver) {
             ctx.fillStyle = "#FF0000";
             ctx.font = "40px Sans-Serif";
@@ -215,11 +223,12 @@ function canvasApp() {
 
     function gameLoop() {
         window.setTimeout(gameLoop, 60);
-       render();
+        render();
     }
 
     gameLoop();
-    monsterMove();
+    monsterMove(mon1);
+    monsterMove(mon2);
 
 
 }
