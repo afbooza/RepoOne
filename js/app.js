@@ -37,8 +37,9 @@ var app = angular.module('app', [
 ]);
 
 
-app.config(['$routeProvider',
+app.config(['$routeProvider', '$locationProvider',
 	function($routeProvider) {
+        //$locationProvider.html5Mode(true);
 		$routeProvider.
 			when('/', {
 				templateUrl: 'partials/homeBody.html',
@@ -52,6 +53,10 @@ app.config(['$routeProvider',
         templateUrl:'partials/contact.html',
         css:['css/foundation.min.css','css/freelancer.css','css/myStyle.css']
       }).
+    when('/game',{
+        templateUrl:'partials/game.html',
+        css:['css/foundation.min.css','css/freelancer.css','css/myStyle.css']
+    }).
 			otherwise({
 				redirectTo: '/'
 			});
