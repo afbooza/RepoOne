@@ -5,11 +5,18 @@ function Monster(){
     this.y = yRandom();
 }
 
+var frameRate = 60;
+var numMonster = 40;
 
-var mon1 = new Monster();
-var mon2 = new Monster();
+var mon = [];
 
+var heroNormPath = "../img/heroNorm.png";
+var heroTackledPath = "../img/pTackled.png";
 
+for(var i = 1; i < numMonster; i++){
+    mon[i] = new Monster();
+    console.log(mon[i]);
+}
 
 var Debugger = function () {
 };
@@ -30,42 +37,45 @@ function canvasSupport() {
 }
 
 var gameOver;
-function yRandom() { return Math.floor((Math.random() * 440) + 10)}
-function xRandom() { return Math.floor((Math.random() * 440) + 10)}
+function yRandom() { return Math.random() * (480 - 0) + 20}
+function xRandom() { return Math.random() * (920 - 50) + 50}
 
 
 function draw(Monster){
     var monsterImage = new Image();
     monsterImage.onload = function(){
-        ctx.drawImage(monsterImage, Monster.x, Monster.y) //TODO: random monster placement
+        ctx.drawImage(monsterImage, Monster.x, Monster.y)
     }
     monsterImage.src = "../img/DetailPlayer.png";
 }
 
 function monsterMove(mon){
-    setTimeout(function() {
-        var chosenValue = Math.random();
-        var step = 30;
+        setTimeout(function () {
+                var chosenValue = Math.random();
+                var step = 30;
 
-        if(chosenValue < 0.25)
-        {
-            mon.x += step;
-        }
-        else if(0.25 < chosenValue < 0.5)
-        {
-            mon.x -= step;
-        }
-        else if(0.5 < chosenValue < 0.75)
-        {
-            mon.y += step;
-        }
-        else if(0.75 < chosenValue < 1)
-        {
-            mon.y -= step;
-        }
-        monsterMove(mon);
-        }, 2000);
-}
+                if (chosenValue < 0.25) {
+                    mon.x += step;
+                    //Debugger.log("forward" + chosenValue);
+                }
+                else if (0.5 > chosenValue && chosenValue > 0.25) {
+                    mon.x -= step;
+                    //Debugger.log("backwards" + chosenValue);
+                }
+                else if (0.5 < chosenValue && chosenValue < 0.75) {
+                    mon.y += step;
+                    //Debugger.log("up" + chosenValue);
+                }
+                else if (0.75 < chosenValue && chosenValue < 1) {
+                    mon.y -= step;
+                    //Debugger.log("down" + chosenValue);
+                }
+                monsterMove(mon);
+
+            }
+            ,
+            2000);
+    }
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 // Game objects
@@ -74,17 +84,38 @@ var hero = {
     height: 20, // movement in pixels per second
     x: canvas.width - 40,
     y: canvas.height / 2,
-    draw: function () {
+    draw: function (imgPath) {
         var heroImage = new Image();
         heroImage.onload = function () {
             ctx.drawImage(heroImage, hero.x, hero.y);
 
         }
-        heroImage.src = "../img/PlayerOneDetail.png";
+        heroImage.src = imgPath;
     }
 }
 var score = 0;
 var speed = 30
+var startTime = new Date();
+
+
+function playerTackled(){
+    hero.draw(heroTackledPath);
+}
+
+function drawElapsedTime() {
+    var elapsed = parseInt((new Date() - startTime) / 1000);
+    console.log("here");
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = "red";
+    ctx.font = "14px Verdana"
+    // draw the running time at half opacity
+    ctx.globalAlpha = 0.50;
+    ctx.fillText("Clock: " + elapsed, 200, 32);
+    ctx.restore();
+    Debugger.log("elapsed" + elapsed);
+}
+
 var background =
 {
     draw: function () {
@@ -96,6 +127,7 @@ var background =
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
             ctx.fillText("Score: " + score, 32, 32);
+            Debugger.log("background");
         }
         bgImage.src = "../img/field.png";
     }
@@ -160,17 +192,44 @@ function canvasApp() {
             hero.x = canvas.width - 40;
         }
         hero.y = canvas.height / 2;
+
     };
 
 // Update game objects
     function update() {
-        if (hero.x <= 60) {
+        if (hero.x <= 40) {
             reset();
         }
-        var distance = Math.sqrt(Math.pow((hero.x - mon1.x),2)+ Math.pow((hero.y - mon1.y),2));
-        if(distance <= 30)
-        {
-           reset();
+        if(hero.y < 10){
+            hero.y = 10;
+        }
+        if(hero.y > 460){
+            hero.y = 460;
+
+        }
+        for(var i = 1; i < numMonster; i++) {
+            if(mon[i].y > canvas.height - 40){
+                mon[i].y = 460
+            }
+            if(mon[i].y < 20){
+                mon[i].y = 20
+            }
+            if(mon[i].x > canvas.width - 80){
+                mon[i].x = 920
+            }
+            if(mon[i].x < 60){
+                mon[i].x = 60
+            }
+            var distance = Math.sqrt(Math.pow((hero.x - mon[i].x), 2) + Math.pow((hero.y - mon[i].y), 2));
+            if (distance <= 30) {
+                setTimeout(
+                    function()
+                    {
+                        playerTackled();
+                        frameRate = 0;
+                    }, 2000);
+                reset();
+            }
         }
     };
 
@@ -178,9 +237,12 @@ function canvasApp() {
     Debugger.log("Drawing field");
     function render() {
         background.draw();
-        hero.draw();
-        draw(mon1);
-        draw(mon2);
+        drawElapsedTime();
+        hero.draw(heroNormPath);
+        for(var i = 1; i< numMonster; i++)
+        {
+            draw(mon[i]);
+        }
         if (gameOver) {
             ctx.fillStyle = "#FF0000";
             ctx.font = "40px Sans-Serif";
@@ -190,13 +252,16 @@ function canvasApp() {
     };
 
     function gameLoop() {
-        window.setTimeout(gameLoop, 60);
+        window.setTimeout(gameLoop, frameRate);
         render();
+
     }
 
     gameLoop();
-    monsterMove(mon1);
-    monsterMove(mon2);
+    for(var i = 1; i<numMonster; i++)
+    {
+        monsterMove(mon[i]);
+    }
 
 
 }
