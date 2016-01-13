@@ -1,7 +1,8 @@
 
 var app = angular.module('app', [
   'ngRoute',
-  'app.controllers'
+  'app.controllers',
+  'angular-carousel-3d'
 ]);
 
 
@@ -42,7 +43,7 @@ app.config(['$routeProvider',
 		$routeProvider.
 			when('/', {
 				templateUrl: 'partials/homeBody.html',
-				controller:'homeController'
+				controller:['homeController', 'Carousel3dController']
 			}).
       when('/Resume',{
         templateUrl: 'partials/resume.html',
