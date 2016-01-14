@@ -1,9 +1,7 @@
-
-
 angular.module('app.controllers', [])
-.controller('homeController',function($scope, $http){
-	$http.get("http://api.openweathermap.org/data/2.5/weather?q=NewYork,us&appid=000547a82f0019492affae60ec6e0b88").
-	success(function(data, status, headers, config)
+.controller('homeController',['$scope', '$http', function($scope, $http){
+	$http.get("http://api.openweathermap.org/data/2.5/weather?q=NewYork,us&appid=000547a82f0019492affae60ec6e0b88")
+		.success(function(data, status, headers, config)
 	{
 		$scope.weather = data;
 		var tempKelvin = data.main.temp;
@@ -17,4 +15,4 @@ angular.module('app.controllers', [])
 	error(function(data,status,headers,config){
 		messageBox.show("error");
 	})
-});
+}]);
