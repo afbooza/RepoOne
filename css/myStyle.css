@@ -36,5 +36,13 @@ list-style-type: none
 	margin:1em;
 	padding: 1em;
 }
+
+#weather{
+	border:1px solid;
+}
+#music{
+	border:1px solid;
+}
+
 .social{text-align: center;}
 .social img{margin:1em;}
