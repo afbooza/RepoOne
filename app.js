@@ -1,6 +1,7 @@
 var app = angular.module('app', [
     'ngRoute',
-    'app.controllers'
+    'app.controllers',
+    'app.directives'
 ]);
 
 
