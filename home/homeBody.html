@@ -1,35 +1,29 @@
 
 <header>
-<div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-<h1> Today's Weather</h1>
-<ul class="weather">
-  <li>City: {{weather.name}}</li>
-  <li>Temp: {{tempFaren}} &deg;F </li>
-  <li>Description: {{weather.weather[0].main}}</li>
-  <li>Max Temp: {{maxTemp}}</li>
-  <li>Min Temp: {{minTemp}}</li>
-</ul>
-
-
-
-</div>
-</div>
-</div>
+    <div class ="container">
+    <h2>Welcome to my site!</h2>
+    </div>
 </header>
+<body>
+<div id="portfolio">
+    <div class="row">
+        <div class="col-lg-6">
+            <section id="weather">
+                        <h2> Today's Weather</h2>
+                        <ul>
+                            <li>City: {{weather.name}}</li>
+                            <li>Temp: {{tempFaren}} &deg;F </li>
+                            <li>Description: {{weather.weather[0].main}}</li>
+                            <li>Max Temp: {{maxTemp}}</li>
+                            <li>Min Temp: {{minTemp}}</li>
+                        </ul>
+            </section>
+        </div>
 
-<div class="soundcloud">
-  <script src="//connect.soundcloud.com/sdk-2.0.0.js"></script>
-<script>
-SC.initialize({
-  client_id: 'd0226c7ae415812dd9e398a9d8bca8cb'
-});
+    </div>
+</div>
+</body>
 
-// stream track id 293
-SC.stream("/tracks/293", function(sound){
-  sound.play();
-});
-</script>
+
 
 </div>
