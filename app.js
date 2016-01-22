@@ -38,13 +38,14 @@ app.directive('head', ['$rootScope', '$compile',
 
 
 app.config(['$routeProvider', '$locationProvider',
-    function ($routeProvider) {
+    function ($routeProvider, $locationProvider) {
         //$locationProvider.html5Mode(true);
         $routeProvider.when('/', {
             templateUrl: 'home/homeBody.html',
             controller: 'homeController'
         }).when('/multimedia', {
-            templateUrl: 'multimedia/multimedia.html'
+            templateUrl: 'multimedia/multimedia.html',
+            css:['multimedia/multimediaStyle.css']
         }).when('/unplugged', {
             templateUrl: 'unplugged/unplugged.html',
             css: ['css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
