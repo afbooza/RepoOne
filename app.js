@@ -54,6 +54,7 @@ app.config(['$routeProvider', '$locationProvider',
             css: ['css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
         }).when('/fun', {
             templateUrl: 'fun/game.html',
+            controller:'gameController',
             css: ['css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
         }).otherwise({
             redirectTo: '/'

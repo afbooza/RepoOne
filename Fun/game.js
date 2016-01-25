@@ -13,12 +13,15 @@ angular.module('app.controllers', [])
 
                 var mon = [];
 
-                var heroNormPath = "../img/heroNorm.png";
-                var heroTackledPath = "../img/pTackled.png";
+                var heroNormPath = "img/heroNorm.png";
+                var heroTackledPath = "img/pTackled.png";
+
+                var xStart = 200;
+
+                var yStart = 200;
 
                 for(var i = 1; i < numMonster; i++){
                     mon[i] = new Monster();
-                    console.log(mon[i]);
                 }
 
                 var Debugger = function () {
@@ -40,8 +43,8 @@ angular.module('app.controllers', [])
                 }
 
                 var gameOver;
-                function yRandom() { return Math.random() * (480 - 0) + 20}
-                function xRandom() { return Math.random() * (920 - 50) + 50}
+                function yRandom() { return Math.floor(Math.random() * (460 + yStart)) + yStart}
+                function xRandom() { return Math.floor(Math.random() * (920 + xStart - 50)) + xStart + 50}
 
 
                 function draw(Monster){
@@ -49,7 +52,7 @@ angular.module('app.controllers', [])
                     monsterImage.onload = function(){
                         ctx.drawImage(monsterImage, Monster.x, Monster.y)
                     }
-                    monsterImage.src = "../img/DetailPlayer.png";
+                    monsterImage.src = "img/DetailPlayer.png";
                 }
 
                 function monsterMove(mon){
@@ -90,7 +93,7 @@ angular.module('app.controllers', [])
                     draw: function (imgPath) {
                         var heroImage = new Image();
                         heroImage.onload = function () {
-                            ctx.drawImage(heroImage, hero.x, hero.y);
+                            ctx.drawImage(heroImage, hero.x , hero.y );
 
                         }
                         heroImage.src = imgPath;
@@ -107,7 +110,6 @@ angular.module('app.controllers', [])
 
                 function drawElapsedTime() {
                     var elapsed = parseInt((new Date() - startTime) / 1000);
-                    console.log("here");
                     ctx.save();
                     ctx.beginPath();
                     ctx.fillStyle = "red";
@@ -116,7 +118,6 @@ angular.module('app.controllers', [])
                     ctx.globalAlpha = 0.50;
                     ctx.fillText("Clock: " + elapsed, 200, 32);
                     ctx.restore();
-                    Debugger.log("elapsed" + elapsed);
                 }
 
                 var background =
@@ -124,15 +125,14 @@ angular.module('app.controllers', [])
                     draw: function () {
                         var bgImage = new Image();
                         bgImage.onload = function () {
-                            ctx.drawImage(bgImage, 0, 0);
+                            ctx.drawImage(bgImage, xStart, yStart);
                             ctx.fillStyle = "rgb(000, 250, 250)";
                             ctx.font = "24px Helvetica";
                             ctx.textAlign = "left";
                             ctx.textBaseline = "top";
-                            ctx.fillText("Score: " + score, 32, 32);
-                            Debugger.log("background");
+                            ctx.fillText("Score: " + score, 32 + xStart, 32 + yStart);
                         }
-                        bgImage.src = "../img/field.png";
+                        bgImage.src = "img/field.png";
                     }
                 }
 
@@ -187,7 +187,7 @@ angular.module('app.controllers', [])
                     });
                 // Reset the game when the player catches a monster
                     function reset() {
-                        if (hero.x <= 60) {
+                        if (hero.x <= xStart + 60) {
                             hero.x = canvas.width - 40;
                             score += 6;
                         }
@@ -200,28 +200,28 @@ angular.module('app.controllers', [])
 
                 // Update game objects
                     function update() {
-                        if (hero.x <= 40) {
+                        if (hero.x <= xStart + 40) {
                             reset();
                         }
-                        if(hero.y < 10){
-                            hero.y = 10;
+                        if(hero.y < yStart + 10){
+                            hero.y = yStart + 10;
                         }
-                        if(hero.y > 460){
-                            hero.y = 460;
+                        if(hero.y > yStart + 460){
+                            hero.y = yStart + 460;
 
                         }
                         for(var i = 1; i < numMonster; i++) {
                             if(mon[i].y > canvas.height - 40){
-                                mon[i].y = 460
+                                mon[i].y = canvas.height - 40
                             }
-                            if(mon[i].y < 20){
-                                mon[i].y = 20
+                            if(mon[i].y < yStart + 20){
+                                mon[i].y = yStart + 20
                             }
                             if(mon[i].x > canvas.width - 80){
-                                mon[i].x = 920
+                                mon[i].x = canvas.width - 80
                             }
-                            if(mon[i].x < 60){
-                                mon[i].x = 60
+                            if(mon[i].x < xStart + 60){
+                                mon[i].x = xStart + 60
                             }
                             var distance = Math.sqrt(Math.pow((hero.x - mon[i].x), 2) + Math.pow((hero.y - mon[i].y), 2));
                             if (distance <= 30) {
