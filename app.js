@@ -43,7 +43,9 @@ app.config(['$routeProvider', '$locationProvider',
             templateUrl: 'home/homeBody.html',
             controller: 'homeController'
         }).when('/multimedia', {
-            templateUrl: 'multimedia/multimedia.html'
+            templateUrl: 'multimedia/multimedia.html',
+            controller:'mediaController',
+            css:['multimedia/multimediaStyle.css']
         }).when('/unplugged', {
             templateUrl: 'unplugged/unplugged.html',
             css: ['css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']

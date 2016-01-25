@@ -1,4 +1,4 @@
-angular.module('app.controllers', [])
+app
 .controller('homeController',['$scope', '$http', function($scope, $http){
 	$http.get("http://api.openweathermap.org/data/2.5/weather?q=NewYork,us&appid=000547a82f0019492affae60ec6e0b88")
 		.success(function(data, status, headers, config)
@@ -16,3 +16,37 @@ angular.module('app.controllers', [])
 		messageBox.show("error");
 	})
 }]);
+app
+.controller('mediaController',['$scope', '$http', function($scope, $http){
+	var next = $("#next");
+	var prev = $("#prev");
+
+	var numOfPanels = 9;
+
+	var degree = 0;
+
+
+	next.click(function()
+	{
+		for(var i = 0; i <= numOfPanels; i++)
+		{
+			$("figure").eq(i).css({"-webkit-transform" : "rotateY( " + degree + "deg) translateZ( 288px )",
+				"transform" : "rotateY( " + degree + "deg) translateZ( 288px )"});
+			degree = degree + 40;
+		}
+	});
+
+	prev.click(function()
+	{
+		for(var i = 0; i <= numOfPanels; i++)
+		{
+			$("figure").eq(i).css({"-webkit-transform" : "rotateY( -" + degree + "deg) translateZ( 288px )",
+				"transform" : "rotateY( -" + degree + "deg) translateZ( 288px )"});
+			degree = degree + 40;
+			console.log("hi");
+		}
+	});
+
+}]);
+
+
