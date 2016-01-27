@@ -3,7 +3,6 @@ var app = angular.module('app', [
     'app.controllers'
 ]);
 
-
 app.directive('head', ['$rootScope', '$compile',
     function ($rootScope, $compile) {
         return {
@@ -34,7 +33,6 @@ app.directive('head', ['$rootScope', '$compile',
         };
     }
 ]);
-
 
 app.config(['$routeProvider', '$locationProvider',
     function ($routeProvider) {

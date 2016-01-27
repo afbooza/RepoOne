@@ -20,19 +20,17 @@ app
 .controller('mediaController',['$scope', '$http', function($scope, $http){
 	var next = $("#next");
 	var prev = $("#prev");
-
 	var numOfPanels = 9;
-
 	var degree = 0;
-
+	var degreeIncrement = 360 / numOfPanels;
 
 	next.click(function()
 	{
 		for(var i = 0; i <= numOfPanels; i++)
 		{
+			degree = degree + degreeIncrement;
 			$("figure").eq(i).css({"-webkit-transform" : "rotateY( " + degree + "deg) translateZ( 288px )",
 				"transform" : "rotateY( " + degree + "deg) translateZ( 288px )"});
-			degree = degree + 40;
 		}
 	});
 
@@ -40,13 +38,11 @@ app
 	{
 		for(var i = 0; i <= numOfPanels; i++)
 		{
-			$("figure").eq(i).css({"-webkit-transform" : "rotateY( -" + degree + "deg) translateZ( 288px )",
-				"transform" : "rotateY( -" + degree + "deg) translateZ( 288px )"});
-			degree = degree + 40;
-			console.log("hi");
+			degree = degree - degreeIncrement;
+			$("figure").eq(i).css({"-webkit-transform" : "rotateY( " + degree + "deg) translateZ( 288px )",
+				"transform" : "rotateY(" + degree + "deg) translateZ( 288px )"});
 		}
 	});
-
 }])
 	.controller('gameController',['$scope', '$http', function($scope, $http){
 		//location.reload();
@@ -67,9 +63,9 @@ app
 		var heroNormPath = "img/heroNorm.png";
 		var heroTackledPath = "img/pTackled.png";
 
-		var xStart = 200;
+		var xStart = 0;
 
-		var yStart = 200;
+		var yStart = 0;
 
 		for(var i = 1; i < numMonster; i++){
 			mon[i] = new Monster();
@@ -150,23 +146,18 @@ app
 		var score = 0;
 		var speed = 30
 		var startTime = new Date();
+		var elapsed = parseInt((new Date() - startTime) / 1000);
+		var clockTime = 120 - elapsed;
+		var minutes = Math.floor(clockTime / 60);
+		var seconds = clockTime - minutes * 60;
+
 
 
 		function playerTackled(){
 			hero.draw(heroTackledPath);
 		}
 
-		function drawElapsedTime() {
-			var elapsed = parseInt((new Date() - startTime) / 1000);
-			ctx.save();
-			ctx.beginPath();
-			ctx.fillStyle = "red";
-			ctx.font = "14px Verdana"
-			// draw the running time at half opacity
-			ctx.globalAlpha = 0.50;
-			ctx.fillText("Clock: " + elapsed, 200, 32);
-			ctx.restore();
-		}
+
 
 		var background =
 		{
@@ -179,6 +170,7 @@ app
 					ctx.textAlign = "left";
 					ctx.textBaseline = "top";
 					ctx.fillText("Score: " + score, 32 + xStart, 32 + yStart);
+					ctx.fillText("Clock: " + minutes + ":" + seconds, 300 + xStart, 32 + yStart)
 				}
 				bgImage.src = "img/field.png";
 			}
@@ -285,7 +277,7 @@ app
 			Debugger.log("Drawing field");
 			function render() {
 				background.draw();
-				drawElapsedTime();
+				//drawElapsedTime();
 				hero.draw(heroNormPath);
 				for(var i = 1; i< numMonster; i++)
 				{
