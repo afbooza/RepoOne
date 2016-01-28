@@ -1,8 +1,14 @@
-.container {
+.carouselContainer {
     width: 210px;
-    height: 140px;
+    height: 320px;
     position: relative;
     perspective: 1000px;
+    margin-left:200px;
+    margin-top:80px;
+}
+.buttons{
+    margin-top:80px;
+    text-align:center;
 }
 
 #carousel {
@@ -17,13 +23,13 @@
     display: block;
     position: absolute;
     width: 186px;
-    height: 116px;
+    height: 300px;
     left: 10px;
     top: 10px;
     border: 2px solid black;
 }
 
-#carousel figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 288px ); }
+#carousel figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 288px ); background-color:red; color:green;}
 #carousel figure:nth-child(2) { transform: rotateY(  40deg ) translateZ( 288px ); }
 #carousel figure:nth-child(3) { transform: rotateY(  80deg ) translateZ( 288px ); }
 #carousel figure:nth-child(4) { transform: rotateY( 120deg ) translateZ( 288px ); }

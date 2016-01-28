@@ -1,9 +1,7 @@
 var app = angular.module('app', [
     'ngRoute',
-    'app.controllers',
-    'app.directives'
+    'app.controllers'
 ]);
-
 
 app.directive('head', ['$rootScope', '$compile',
     function ($rootScope, $compile) {
@@ -36,15 +34,15 @@ app.directive('head', ['$rootScope', '$compile',
     }
 ]);
 
-
 app.config(['$routeProvider', '$locationProvider',
-    function ($routeProvider, $locationProvider) {
+    function ($routeProvider) {
         //$locationProvider.html5Mode(true);
         $routeProvider.when('/', {
             templateUrl: 'home/homeBody.html',
             controller: 'homeController'
         }).when('/multimedia', {
             templateUrl: 'multimedia/multimedia.html',
+            controller:'mediaController',
             css:['multimedia/multimediaStyle.css']
         }).when('/unplugged', {
             templateUrl: 'unplugged/unplugged.html',
@@ -54,6 +52,7 @@ app.config(['$routeProvider', '$locationProvider',
             css: ['css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
         }).when('/fun', {
             templateUrl: 'fun/game.html',
+            controller:'gameController',
             css: ['css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
         }).otherwise({
             redirectTo: '/'

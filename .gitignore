@@ -5,6 +5,7 @@ ehthumbs.db
 *.iml
 # Folder config file
 Desktop.ini
+*.ai
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
