@@ -170,7 +170,7 @@ app
 					ctx.textAlign = "left";
 					ctx.textBaseline = "top";
 					ctx.fillText("Score: " + score, 32 + xStart, 32 + yStart);
-					ctx.fillText("Clock: " + minutes + ":" + seconds, 300 + xStart, 32 + yStart)
+					ctx.fillText("Clock: " + elapsed, 300 + xStart, 32 + yStart)
 				}
 				bgImage.src = "img/field.png";
 			}
