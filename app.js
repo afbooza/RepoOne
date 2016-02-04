@@ -39,7 +39,8 @@ app.config(['$routeProvider', '$locationProvider',
         //$locationProvider.html5Mode(true);
         $routeProvider.when('/', {
             templateUrl: 'home/homeBody.html',
-            controller: 'homeController'
+            controller: 'homeController',
+            css:['home/homeBodyCss.css']
         }).when('/multimedia', {
             templateUrl: 'multimedia/multimedia.html',
             controller:'mediaController',
@@ -53,7 +54,7 @@ app.config(['$routeProvider', '$locationProvider',
         }).when('/fun', {
             templateUrl: 'fun/game.html',
             controller:'gameController',
-            css: ['css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
+            css: ['css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css', 'fun/game.css']
         }).otherwise({
             redirectTo: '/'
         });
