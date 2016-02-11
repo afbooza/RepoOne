@@ -18,15 +18,29 @@ list-style-type: none
   68%, 72% { left: 50px; }
   100% { top: 100px; left: 100%; }
 }
-.info{
+.info, a{
+	font-family: 'Lato', sans-serif;
+	font-weight:400;
 	color:white;
 }
-.info:hover{
-	color:blue;
+.info a:hover{
+	color:#8c8c8c;
 	text-decoration: none;
 }
-.info:visited{
+.info a:visited{
+	color:#8c8c8c;
+}
+.infoResume, .infoResume a{
+	font-family: 'Lato', sans-serif;
+	font-weight:100;
 	color:white;
+}
+.infoResume a:hover{
+	color:#8c8c8c;
+	text-decoration: none;
+}
+.infoResume a:visited{
+	color:#8c8c8c;
 }
 #portfolio{
 	margin:0;
@@ -37,12 +51,32 @@ list-style-type: none
 	padding: 1em;
 }
 
+
 #weather{
 	border:1px solid;
 }
-#music{
-	border:1px solid;
+
+.careerTitle{
+	line-height:1em;
 }
 
 .social{text-align: center;}
 .social img{margin:1em;}
+
+.juicePic{
+	width:300px;
+	height:505px;
+}
+.container h2 {
+	font-family: 'Lato', sans-serif;
+	color:white;
+	font-weight:100;
+	font-size:2em;
+}
+.resumeMain p, ul, li, b, i{
+	font-family: 'Lato', sans-serif;
+	font-weight:normal;
+}
+.resumeMain h4{
+	font-weight:100;
+}

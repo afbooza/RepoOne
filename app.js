@@ -40,17 +40,17 @@ app.config(['$routeProvider', '$locationProvider',
         $routeProvider.when('/', {
             templateUrl: 'home/homeBody.html',
             controller: 'homeController',
-            css:['home/homeBodyCss.css']
+            css:['home/homeBodyCss.css', 'css/myStyle.css']
         }).when('/multimedia', {
             templateUrl: 'multimedia/multimedia.html',
             controller:'mediaController',
-            css:['multimedia/multimediaStyle.css']
+            css:['multimedia/multimediaStyle.css', 'css/myStyle.css']
         }).when('/unplugged', {
             templateUrl: 'unplugged/unplugged.html',
             css: ['css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
         }).when('/career', {
             templateUrl: 'career/resume.html',
-            css: ['css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css', 'css/myStyle.css']
+            css: ['css/myStyle.css', 'css/third-party/fontello.css', 'css/third-party/foundation.min.css', 'css/third-party/freelancer.css']
         }).when('/fun', {
             templateUrl: 'fun/game.html',
             controller:'gameController',

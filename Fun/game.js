@@ -107,17 +107,22 @@ angular.module('app.controllers', [])
                 function playerTackled(){
                     hero.draw(heroTackledPath);
                 }
-
+                function checkTime(i) {
+                    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                    return i;
+                }
                 function drawElapsedTime() {
-                    var elapsed = parseInt((new Date() - startTime) / 1000);
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.fillStyle = "red";
-                    ctx.font = "14px Verdana"
-                    // draw the running time at half opacity
-                    ctx.globalAlpha = 0.50;
-                    ctx.fillText("Clock: " + elapsed, 200, 32);
-                    ctx.restore();
+                    var today = new Date();
+                    var h = today.getHours();
+                    var m = today.getMinutes();
+                    var s = today.getSeconds();
+                    m = checkTime(m);
+                    s = checkTime(s);
+                    document.getElementById('txt').innerHTML =
+                        h + ":" + m + ":" + s;
+                    var t = setTimeout(drawElapsedTime, 500);
+                    Debugger(t);
+                    ctx.fillText("Clock: " + h + ":" + m + ":" + s, 200, 32);
                 }
 
                 var background =
@@ -240,7 +245,7 @@ angular.module('app.controllers', [])
                     Debugger.log("Drawing field");
                     function render() {
                         background.draw();
-                        drawElapsedTime();
+                        Debugger(drawElapsedTime());
                         hero.draw(heroNormPath);
                         for(var i = 1; i< numMonster; i++)
                         {

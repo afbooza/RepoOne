@@ -15,3 +15,24 @@
     max-width: 100%;
     height: auto;
 }
+
+
+/*.circle {*/
+    /*border-radius: 50%;*/
+    /*display: inline-block;*/
+    /*position: relative;*/
+    /*border-radius: 50%;*/
+    /*display: block;*/
+
+/*}*/
+/*.circle:after {*/
+    /*content: "";*/
+    /*display: block;*/
+    /*height:200%;*/
+    /*width:200%;*/
+    /*background: radial-gradient(ellipse at center, rgba(24, 188, 156, ) 0%, rgba(24, 188, 156, 1) 70%, rgba(24, 188, 156, 1) 100%);*/
+    /*border-radius: 50%;*/
+    /*position: absolute;*/
+    /*top: -50%;*/
+    /*left: -50%;*/
+/*}*/
