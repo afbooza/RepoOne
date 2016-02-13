@@ -60,6 +60,7 @@ list-style-type: none
 	line-height:1em;
 }
 
+
 .social{text-align: center;}
 .social img{margin:1em;}
 
@@ -79,4 +80,7 @@ list-style-type: none
 }
 .resumeMain h4{
 	font-weight:100;
+}
+@media (max-width: 600px) {
+
 }

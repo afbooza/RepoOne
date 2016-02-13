@@ -31,15 +31,15 @@ button:hover{
     margin: 0;
     display: block;
     position: absolute;
-    width: 186px;
-    height: 300px;
+    width: 11.625em;
+    height: 18.75em;
     left: 10px;
     top: 10px;
     border: 2px solid black;
 }
 .figure{
-    width: 182px;
-    height: 296px;
+    width: 11.425em;
+    height: 18.5em;
 }
 
 /*#carousel figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 288px );}*/
