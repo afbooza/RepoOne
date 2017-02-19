@@ -20,7 +20,7 @@ app
 .controller('mediaController',['$scope', '$http', function($scope, $http){
 	var next = $("#next");
 	var prev = $("#prev");
-	var numOfPanels = 3;
+	var numOfPanels = 5;
 	var degree = 0;
 	var degreeIncrement = 360 / numOfPanels;
 

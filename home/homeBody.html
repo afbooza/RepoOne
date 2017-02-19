@@ -1,26 +1,26 @@
 
-<body>
-    <div id = "containerHome" class ="portfolio">
-    <h1 id ="logo" class ="circle"><img src="img/theking.png"/></h1>
+<header>
+    <div class ="container">
+        <h2>Welcome to My Site</h2>
     </div>
+</header>
+<body>
+<div>
+    <div class="row">
+        <div class="col-lg-6">
+            <section id="weather">
+                        <h2> Today's Weather</h2>
+                        <ul>
+                            <li>City: {{weather.name}}</li>
+                            <li>Temp: {{tempFaren}} &deg;F </li>
+                            <li>Description: {{weather.weather[0].main}}</li>
+                            <li>Max Temp: {{maxTemp}}</li>
+                            <li>Min Temp: {{minTemp}}</li>
+                        </ul>
+            </section>
+        </div>
 
-
-<!--<div id="portfolio">-->
-    <!--<div class="row">-->
-        <!--<div class="col-lg-6">-->
-            <!--<section id="weather">-->
-                        <!--<h2> Today's Weather</h2>-->
-                        <!--<ul>-->
-                            <!--<li>City: {{weather.name}}</li>-->
-                            <!--<li>Temp: {{tempFaren}} &deg;F </li>-->
-                            <!--<li>Description: {{weather.weather[0].main}}</li>-->
-                            <!--<li>Max Temp: {{maxTemp}}</li>-->
-                            <!--<li>Min Temp: {{minTemp}}</li>-->
-                        <!--</ul>-->
-            <!--</section>-->
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</div>-->
+    </div>
+</div>
 </body>
 </div>
